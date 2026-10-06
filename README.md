@@ -274,14 +274,16 @@ Hatalar kalıcı, geçici ve sonucu belirsiz olarak ayrılır. Okuma isteklerind
 olarak yeniden denenir. Yazma istekleri, mükerrer kayıt oluşmaması için hiçbir zaman kendiliğinden yeniden gönderilmez;
 yazılamayan kayıt bir sonraki turda yeniden ele alınır ya da İşlenemeyen Kayıtlar ekranında sizi bekler. ERP'nin reddettiği
 sipariş ve cari açma kayıtları ile mağazaya yazılamayan ürünler bu ekrana düşer ve siz "Yeniden dene" diyene kadar tekrar
-gönderilmez. Cari Al, Adres Al, tahsilat, kargo takip numarası, iptal ve fatura bilgisi hataları canlı akışta ve Denetim
-ekranında görünür.
+gönderilmez; hatanın yanında hata kodunun anlamı da gösterilir. Ürün sonraki turda başarıyla gönderilince kaydı kendiliğinden
+kapanır. Cari Al, Adres Al, tahsilat, kargo takip numarası, iptal ve fatura bilgisi hataları canlı akışta ve Denetim ekranında
+görünür.
 
 ### Sonucu belirsiz yazmalar
-Bağlantının yazma sırasında kopması gibi durumlarda bir kaydın ERP'ye yazılıp yazılmadığı kesinleşmeyebilir. Böyle bir yazma,
-mükerrer kayıt oluşmaması için tekrar gönderilmez; tur özetinde ve canlı akışta bildirilir ve kaydı ERP'de kontrol etmeniz
-istenir. Sipariş, durumu netleşene kadar mağazada "aktarıldı" olarak işaretlenmez. Bu durumda destek ekibimiz kaydı sizinle
-birlikte sonuçlandırır.
+Bağlantının yazma sırasında kopması gibi durumlarda bir siparişin ERP'ye yazılıp yazılmadığı kesinleşmeyebilir. Böyle bir
+yazma, mükerrer kayıt oluşmaması için tekrar gönderilmez ve sipariş İşlenemeyen Kayıtlar ekranında listelenir. Siparişi
+ERP'de kontrol ettikten sonra "ERP'de var — yazıldı say" düğmesine basarsınız: düğme ERP'ye bir şey yazmaz, sistem siparişi
+o anda ERP'de arar, bulursa kaydı kapatır ve sipariş bir sonraki turda mağazada "aktarıldı" olarak işaretlenir. Sipariş
+ERP'de yoksa önce ERP'ye aynı sipariş numarasıyla elle girilir, ardından aynı düğmeye basılır.
 
 ### Mükerrer kayıt önleme
 Aynı sipariş ERP'ye ikinci kez yazılmaz. Bunun için üç kontrol birlikte çalışır: entegrasyonun kendi kayıt defteri, ERP'de
@@ -408,18 +410,15 @@ mağaza POS adı ve taksit sayısı, kargo firmaları ile ERP cari kodları eşl
 bu pencerelerde seçilir.
 
 ### İşlenemeyen Kayıtlar
-ERP'nin reddettiği sipariş ve cari açma kayıtları ile mağazaya yazılamayan ya da sonucu belirsiz kalan ürün kayıtları burada
+ERP'nin reddettiği sipariş ve cari açma kayıtları, sonucu belirsiz kalan siparişler ve mağazaya yazılamayan ürünler burada
 kartlar hâlinde listelenir. Kartlar duruma göre süzülebilir ve aranabilir. Bir karta tıklanınca açılan inceleme panelinde hata
-ayrıntısı görülür. "Yeniden dene" tek bir deneme izni verir, "Vazgeç" kaydı kapatır ve kayda operatör notu eklenebilir.
-Sonucu belirsiz kayıtlarda yeniden deneme düğmesi gösterilmez; bunların ERP'de ya da mağazada kontrol edilmesi önerilir.
+ayrıntısı ve hata kodunun anlamı görülür. "Yeniden dene" tek bir deneme izni verir, "Vazgeç" kaydı kapatır ve kayda operatör
+notu eklenebilir. Sonucu belirsiz siparişlerde yeniden deneme ve vazgeçme yoktur; sipariş ERP'de kontrol edilip "ERP'de var —
+yazıldı say" düğmesiyle kapatılır.
 
 ### Denetim
 Entegrasyonun yaptığı işlemler bir tabloda listelenir: zaman, kategori, eylem, sonuç ve ayrıntı. Tetiklenen işler ve yazma
 sonuçları buradan izlenir.
-
-### Hata kodları
-Mağaza ve ERP tarafından dönebilecek hata kodlarının sözlüğüdür. Her kodun kalıcı, geçici ya da belirsiz sayıldığı gösterilir;
-yeni kod tanımlanabilir ya da var olan kodun sınıfı değiştirilebilir. Teknik kullanıcılara yöneliktir.
 
 ### Servis
 Windows servisinin durumu, başlangıç türü ve yönetici yetkisi bu ekranda görünür. Servis buradan kurulabilir, durdurulabilir
@@ -430,7 +429,8 @@ ya da kaldırılabilir; başlangıç türü otomatik ya da elle olarak ayarlanab
 Bu ekranda mağaza bağlantısı, WolvoxApi bağlantısı, bağlantı testi ve çalışma alanı yer alır. Mağaza bağlantısı için site
 adresi, web servis kullanıcı adı ve parolası; WolvoxApi bağlantısı için adres ve anahtar girilir. Çalışma alanı şirket,
 çalışma yılı ve şubeden oluşur. Kimlik bilgileri kaydedildikten sonra gösterilmez; yalnızca tanımlı olup olmadıkları ve son
-değişiklik tarihi görünür. "Bağlantıyı test et" düğmesi iki tarafa veri yazmadan gerçek bir çağrı yapar.
+değişiklik tarihi görünür. "Bağlantıyı test et" düğmesi iki tarafa veri yazmadan gerçek bir çağrı yapar. "Lisans sözleşmesi"
+kartında onaylanan sözleşmenin sürümü, onaylayan ve onay zamanı görünür; onaylanan metin ve onay geçmişi buradan açılır.
 
 ## Kurulum ve devreye alma
 
@@ -439,7 +439,8 @@ değişiklik tarihi görünür. "Bağlantıyı test et" düğmesi iki tarafa ver
 2. **Mağaza erişimini hazırlayın.** T-Soft mağaza panelinizde gerekli yetkilere sahip bir web servis kullanıcısı tanımlayın.
    Mağazanızda IP kısıtı varsa entegrasyonun çalışacağı bilgisayara izin verin.
 3. **Entegrasyonu kurun.** Entegrasyonu WolvoxApi'ye erişebilen bir Windows bilgisayara kurun ve yönetim panelini açın.
-4. **Yönetici hesabını oluşturun.** İlk açılışta, bilgisayarda oluşturulan kurulum koduyla yönetici hesabınızı oluşturun.
+4. **Yönetici hesabını oluşturun ve sözleşmeyi onaylayın.** İlk açılışta, bilgisayarda oluşturulan kurulum koduyla yönetici
+   hesabınızı oluşturun; ardından lisans sözleşmesini okuyup onaylayın.
 5. **Kurulum sihirbazını tamamlayın.** "Wolvox API adresi" ve "API anahtarı" alanlarını doldurun; ardından ERP şirketini,
    çalışma yılını, gerekiyorsa şubeyi seçin ve mağazanız için kısa bir ad girin. Veri oluştuktan sonra bu ad, şirket ve
    çalışma yılı değiştirilemez; seçiminizi dikkatle yapın.
@@ -508,19 +509,21 @@ uyarır.
 uzaktan erişim yoktur.
 
 **Kişisel veri** — Canlı akış ve günlük dosyaları müşteri adı, e-posta ve telefon gibi kişisel veriler içerebilir ve 14 gün
-saklanır. Destek talebine eklemeden önce dosyaları gözden geçirin.
+saklanır. Denetim kayıtları ve çözülmüş işlenemeyen kayıtlar, işleyişin ihtiyaç duyduğu kayıtlar dışında 90 gün sonra silinir.
+Destek talebine eklemeden önce dosyaları gözden geçirin.
 
 ## Sık sorulan sorular
 
 ### Aynı sipariş ERP'ye iki kez yazılabilir mi?
 Hayır. Entegrasyon bir siparişi yazmadan önce kendi kayıt defterine ve ERP'deki siparişlere bakar. Yazdıktan sonra siparişi
 ERP'den geri okuyarak doğrular ve mağazada "aktarıldı" olarak işaretler. Sonucu kesinleşmeyen bir yazma kendiliğinden tekrar
-gönderilmez; canlı akışta bildirilir ve kaydı ERP'de kontrol etmeniz istenir.
+gönderilmez; sipariş İşlenemeyen Kayıtlar ekranında listelenir ve ERP'de kontrol edildikten sonra "ERP'de var — yazıldı say"
+düğmesiyle kapatılır.
 
 ### WolvoxApi'ye ya da ERP'ye ulaşılamazsa ne olur?
 Bağlantı sorunu Durum ekranında ve üst şeritteki göstergede görünür. ERP'ye yazılamayan sipariş mağazada "aktarıldı" olarak
 işaretlenmez ve bağlantı geri geldiğinde sonraki turlarda yeniden ele alınır. Bağlantı yazma sırasında koptuysa kayıt tekrar
-gönderilmez; canlı akışta bildirilir ve ERP'de kontrol edilmesi istenir.
+gönderilmez; İşlenemeyen Kayıtlar ekranında listelenir ve ERP'de kontrol edilmesi istenir.
 
 ### Lisansın süresi dolarsa ne olur?
 Bitişe 30 gün kala panelde kalan gün sayısıyla bir uyarı çıkar. Lisansın süresi dolarsa ya da lisans T-Soft entegrasyonu ek
@@ -566,8 +569,9 @@ Stok Gönder işi panelden başlatılır; sipariş aktarımı gibi belirli aral�
 
 ## Lisanslama
 
-Wolvox T-Soft Entegrasyon, WolvoxApi lisansına eklenen T-Soft entegrasyonu ek ürünü olarak çalışır. Lisansın durumu ve bitiş
-tarihi WolvoxApi yönetim aracında görünür. Entegrasyon panelinde bitişe 30 gün kala kalan gün sayısıyla bir uyarı çıkar;
+Wolvox T-Soft Entegrasyon, WolvoxApi lisansına eklenen T-Soft entegrasyonu ek ürünü olarak çalışır. Kullanım, iki ürün için
+ortak olan son kullanıcı lisans sözleşmesine tabidir; sözleşme ilk kurulumda panelde okunup onaylanır, yeni sürümü
+yayımlandığında onay yeniden istenir. Lisansın durumu ve bitiş tarihi WolvoxApi yönetim aracında görünür. Entegrasyon panelinde bitişe 30 gün kala kalan gün sayısıyla bir uyarı çıkar;
 lisans geçersizse işler çalışmaz ve nedeni Durum ve Entegrasyon ekranlarında gösterilir. Lisans yenilendiğinde işler
 kendiliğinden devam eder. Fiyatlandırma ve lisans koşulları için bizimle iletişime geçin.
 
